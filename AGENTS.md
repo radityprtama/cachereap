@@ -19,7 +19,7 @@ node dist/index.js --dry-run   # run without installing to PATH
 
 - No lint or format config exists. Don't run `eslint`/`prettier` — there is none.
 - After editing source, `npm run typecheck && npm run build` before verifying with `node dist/index.js`.
-- Git tag `v*` MUST match `package.json` version — enforced by `.github/workflows/release.yml` (tag push → typecheck, test, build, publish release tarball).
+- Release flow: `.github/workflows/release.yml` runs release-please on `main` push — it bumps `package.json` version, opens a version-bump PR, and on merge creates tag `v*` + GitHub release (conventional commits required). Downstream jobs (npm publish + tarball attach) only run when `release_created == 'true'`. Don't push tags manually for releases; commit `feat:`/`fix:` and let release-please version it.
 
 ## Architecture map
 

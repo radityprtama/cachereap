@@ -42,7 +42,7 @@ Hasilnya ukuran cache root-only dilaporkan akurat.
 
 ### Discovery pakai GNU `find`, bukan walker Node
 Awalnya ditulis walker Node recursive (`readdir`). Pada tree project yang besar (`~/projects`), walker JS jauh lebih lambat dari GNU `find` dan sempat membuat run macet puluhan detik di section 03. Solusi: semua fungsi discovery (`findLines`, `findDirsBySuffix`, `findStaleNodeModules`, `deleteOldFiles`) memakai `execaSync("find", args)` dengan flag yang sama persis dengan bash:
-- `-maxdepth N` (bun: 3, node_modules: 4, .next: 5)
+- `-maxdepth N` (node_modules: 4, turbo/nx: 5); bun dan `.next` tanpa `-maxdepth` — bun memakai `rmContents` native langsung ke `~/.bun/install/cache` (tanpa find sama sekali, sama seperti bash), `.next` memakai `findDirsBySuffix` dengan default `Infinity` sehingga flag tidak dikirim (identik dengan bash baris 277)
 - `-path '*/node_modules' -prune` untuk menghindari node_modules bersarang
 - `-type d -name node_modules -atime +N` untuk stale
 - `-type f -atime +N -delete` untuk journal/crash (bash pakai `find ... -exec rm -f {} \;`)

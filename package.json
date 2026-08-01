@@ -1,10 +1,10 @@
 {
-  "name": "big-cleanup",
-  "version": "0.1.0",
-  "description": "Cleanup tool for Fedora/Next.js/Bun dev machines. Faithful TS port of big-cleanup.sh.",
+  "name": "cachereap",
+  "version": "0.2.0",
+  "description": "Cleanup tool for Fedora/Next.js/Bun dev machines. Faithful TS port of cachereap.sh.",
   "type": "module",
   "bin": {
-    "big-cleanup": "./dist/index.js"
+    "cachereap": "./dist/index.js"
   },
   "files": [
     "dist"

@@ -18,7 +18,7 @@ export function showHistory(): void {
   banner("RIWAYAT CLEANUP", "10 run terakhir");
 
   if (history.length === 0) {
-    console.log(`  ${dim("Belum ada riwayat — jalankan big-cleanup dulu.")}`);
+    console.log(`  ${dim("Belum ada riwayat — jalankan cachereap dulu.")}`);
     return;
   }
 

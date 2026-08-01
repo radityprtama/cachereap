@@ -2,13 +2,22 @@
 
 Semua perubahan penting dicatat di sini. Format mengikuti [Keep a Changelog](https://keepachangelog.com/id/1.1.0/), versi mengikuti [Semantic Versioning](https://semver.org/).
 
+## [0.2.0] - 2026-08-01
+
+### Added
+- GitHub Actions workflow `.github/workflows/release.yml`: verifikasi tag vs `package.json`, typecheck, test, build, dan publish GitHub Release (artefak tarball + `cachereap.sh`) saat tag `v*` di-push.
+
+### Changed
+- **Proyek di-rename dari `big-cleanup` menjadi `cachereap`**: binari `cachereap`, script `cachereap.sh`, dan direktori konfigurasi kini `~/.config/cachereap/` (sebelumnya `~/.config/big-cleanup/`). Ini adalah breaking change — pengguna versi 0.1.x harus memigrasi config lama secara manual.
+- Skrip bash `big-cleanup.sh` → `cachereap.sh` (nama file, banner, dan path config internal ikut diubah).
+
 ## [0.1.0] - 2026-08-01
 
 ### Added
-- Port TypeScript dari `big-cleanup.sh` dengan fidelitas perilaku 1:1 (output Indonesia, prompt konfirmasi, marker `✓`/`✕`/`○`, banner, ANSI 256).
+- Port TypeScript dari `cachereap.sh` dengan fidelitas perilaku 1:1 (output Indonesia, prompt konfirmasi, marker `✓`/`✕`/`○`, banner, ANSI 256).
 - 14 section cleanup: `bun`, `npmcache`, `next`, `nodemodules`, `turbo`, `langcache`, `dnf`, `kernel`, `flatpak`, `journal`, `crash`, `docker`, `trash`, `configaudit`.
 - CLI flags: `--yes`, `--dry-run`, `--edit-config`, `--history`, `--list-sections`, `--help`.
-- Konfigurasi JSON (`~/.config/big-cleanup/config.json`) via library `conf` — pengganti `config.conf` bash.
+- Konfigurasi JSON (`~/.config/cachereap/config.json`) via library `conf` — pengganti `config.conf` bash.
 - Riwayat cleanup tersimpan di dalam config (`field history`, max 50 entri) — pengganti `history.log`.
 - Safety: mode `--dry-run` tidak pernah mengeksekusi perintah destruktif; `confirm.ts` mengembalikan `true` saat dry-run agar output simulasi lengkap.
 - Deteksi platform: menolak jalan di non-Linux (Linux-only).
@@ -29,4 +38,5 @@ Semua perubahan penting dicatat di sini. Format mengikuti [Keep a Changelog](htt
 ### Removed
 - (tidak ada — semua fitur bash dipertahankan)
 
+[0.2.0]: https://github.com/radityra/cachereap/releases/tag/v0.2.0
 [0.1.0]: https://github.com/radityra/cachereap/releases/tag/v0.1.0

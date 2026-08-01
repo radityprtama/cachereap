@@ -37,9 +37,9 @@ describe("config defaults", () => {
     expect(conf.get("skipSections")).toEqual(["docker", "kernel"]);
   });
 
-  it("writes to ~/.config/big-cleanup/config.json (no -nodejs suffix)", async () => {
+  it("writes to ~/.config/cachereap/config.json (no -nodejs suffix)", async () => {
     const { getConfig } = await loadConfig();
     const conf = getConfig();
-    expect(conf.path).toBe(path.join(tempHome, "big-cleanup", "config.json"));
+    expect(conf.path).toBe(path.join(tempHome, "cachereap", "config.json"));
   });
 });

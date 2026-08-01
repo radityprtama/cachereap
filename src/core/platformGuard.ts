@@ -1,6 +1,6 @@
 export function assertLinux(): void {
   if (process.platform !== "linux") {
-    console.error("big-cleanup hanya mendukung Linux.");
+    console.error("cachereap hanya mendukung Linux.");
     process.exit(1);
   }
 }

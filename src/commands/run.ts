@@ -19,7 +19,7 @@ export async function runCleanup(): Promise<void> {
   // bash: $(date '+%A, %d %B %Y — %H:%M') — system locale, keep identical
   const now = execaSync("date", ["+%A, %d %B %Y — %H:%M"], { reject: false }).stdout.trim();
 
-  banner("BIG CLEANUP", `Fedora Dev Machine  ·  ${now}`);
+  banner("CACHEREAP", `Fedora Dev Machine  ·  ${now}`);
 
   const availBefore = await getAvailGb();
   console.log(`  ${dim("Free space sebelum:")}`);
@@ -59,6 +59,6 @@ export async function runCleanup(): Promise<void> {
   } else {
     console.log(`  ${dim("Tidak ada perubahan signifikan pada free space.")}`);
   }
-  console.log(`  ${dim("Lihat riwayat lengkap:")} ${cyan("big-cleanup --history")}`);
+  console.log(`  ${dim("Lihat riwayat lengkap:")} ${cyan("cachereap --history")}`);
   hr();
 }

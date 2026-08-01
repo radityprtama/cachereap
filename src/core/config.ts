@@ -20,8 +20,8 @@ export interface ConfigShape {
 }
 
 const conf = new Conf<ConfigShape>({
-  projectName: "big-cleanup",
-  projectSuffix: "", // keep ~/.config/big-cleanup/ (conf appends "-nodejs" by default)
+  projectName: "cachereap",
+  projectSuffix: "", // keep ~/.config/cachereap/ (conf appends "-nodejs" by default)
   defaults: {
     projectDir: "~/projects",
     staleDays: 30,

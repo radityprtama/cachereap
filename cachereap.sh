@@ -1,23 +1,23 @@
 #!/usr/bin/env bash
 #
-# big-cleanup.sh — Biweekly deep clean untuk Fedora dev machine
+# cachereap.sh — Biweekly deep clean untuk Fedora dev machine
 # (Next.js / Bun / Tanstack Start / monorepo)
 #
 # Usage:
-#   chmod +x big-cleanup.sh
-#   ./big-cleanup.sh                 # jalan interaktif
-#   ./big-cleanup.sh --yes           # otomatis tanpa konfirmasi (buat cron/systemd)
-#   ./big-cleanup.sh --dry-run       # simulasi, tidak menghapus apapun
-#   ./big-cleanup.sh --edit-config   # buka config file di $EDITOR
-#   ./big-cleanup.sh --history       # tampilkan riwayat run sebelumnya
-#   ./big-cleanup.sh --list-sections # tampilkan daftar key section (buat SKIP_SECTIONS)
-#   ./big-cleanup.sh --help          # tampilkan bantuan
+#   chmod +x cachereap.sh
+#   ./cachereap.sh                 # jalan interaktif
+#   ./cachereap.sh --yes           # otomatis tanpa konfirmasi (buat cron/systemd)
+#   ./cachereap.sh --dry-run       # simulasi, tidak menghapus apapun
+#   ./cachereap.sh --edit-config   # buka config file di $EDITOR
+#   ./cachereap.sh --history       # tampilkan riwayat run sebelumnya
+#   ./cachereap.sh --list-sections # tampilkan daftar key section (buat SKIP_SECTIONS)
+#   ./cachereap.sh --help          # tampilkan bantuan
 #
 set -euo pipefail
 
-CONFIG_DIR="$HOME/.config/big-cleanup"
+CONFIG_DIR="$HOME/.config/cachereap"
 CONFIG_FILE="$CONFIG_DIR/config.conf"
-DATA_DIR="$HOME/.local/share/big-cleanup"
+DATA_DIR="$HOME/.local/share/cachereap"
 HISTORY_FILE="$DATA_DIR/history.log"
 
 AUTO_YES=false
@@ -114,8 +114,8 @@ ensure_config() {
   mkdir -p "$CONFIG_DIR" "$DATA_DIR"
   if [ ! -f "$CONFIG_FILE" ]; then
     cat > "$CONFIG_FILE" << 'CONF_EOF'
-# ~/.config/big-cleanup/config.conf
-# Konfigurasi big-cleanup.sh — edit sesuai kebutuhan, lalu simpan.
+# ~/.config/cachereap/config.conf
+# Konfigurasi cachereap.sh — edit sesuai kebutuhan, lalu simpan.
 
 # Lokasi folder project/monorepo yang discan untuk .next/cache, node_modules, turbo/nx cache
 PROJECT_DIR="$HOME/projects"
@@ -124,7 +124,7 @@ PROJECT_DIR="$HOME/projects"
 STALE_DAYS=30
 
 # Section yang mau di-skip otomatis tiap run (comma-separated, tanpa spasi).
-# Jalankan './big-cleanup.sh --list-sections' untuk lihat daftar key yang valid.
+# Jalankan './cachereap.sh --list-sections' untuk lihat daftar key yang valid.
 # Contoh: SKIP_SECTIONS="docker,kernel"
 SKIP_SECTIONS=""
 CONF_EOF
@@ -149,9 +149,9 @@ skip_notice() {
 
 # ================= ACTIONS (non-cleanup) ==================
 show_help() {
-  banner "BIG CLEANUP" "Fedora Dev Machine — Bantuan"
+  banner "CACHEREAP" "Fedora Dev Machine — Bantuan"
   cat << EOF
-  Usage: ./big-cleanup.sh [opsi]
+  Usage: ./cachereap.sh [opsi]
 
   Opsi:
     (tanpa opsi)      Jalan interaktif, tanya konfirmasi tiap section
@@ -234,7 +234,7 @@ STALE_DAYS="${STALE_DAYS:-30}"
 
 # ================= START CLEANUP ==================
 clear 2>/dev/null || true
-banner "BIG CLEANUP" "Fedora Dev Machine  ·  $(date '+%A, %d %B %Y — %H:%M')"
+banner "CACHEREAP" "Fedora Dev Machine  ·  $(date '+%A, %d %B %Y — %H:%M')"
 
 AVAIL_BEFORE=$(get_avail_gb)
 echo "  ${C_DIM}Free space sebelum:${C_RESET}"
@@ -519,5 +519,5 @@ elif [ "$FREED" -gt 0 ]; then
 else
   echo "  ${C_DIM}Tidak ada perubahan signifikan pada free space.${C_RESET}"
 fi
-echo "  ${C_DIM}Lihat riwayat lengkap: ${C_RESET}${C_CYAN}./big-cleanup.sh --history${C_RESET}"
+echo "  ${C_DIM}Lihat riwayat lengkap: ${C_RESET}${C_CYAN}./cachereap.sh --history${C_RESET}"
 hr

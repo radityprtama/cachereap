@@ -8,9 +8,9 @@ import { runCleanup } from "./commands/run";
 import { setRunMode } from "./core/state";
 
 function showHelp(): void {
-  banner("BIG CLEANUP", "Fedora Dev Machine — Bantuan");
+  banner("CACHEREAP", "Fedora Dev Machine — Bantuan");
   const conf = getConfig();
-  console.log(`  Usage: big-cleanup [opsi]`);
+  console.log(`  Usage: cachereap [opsi]`);
   console.log();
   console.log(`  Opsi:`);
   console.log(`    (tanpa opsi)      Jalan interaktif, tanya konfirmasi tiap section`);
@@ -35,7 +35,7 @@ export async function runCli(argv: string[]): Promise<void> {
 
   const program = new Command();
   program
-    .name("big-cleanup")
+    .name("cachereap")
     .helpOption(false)
     .allowUnknownOption(false)
     .option("--yes", "jalan otomatis tanpa konfirmasi")
@@ -47,7 +47,7 @@ export async function runCli(argv: string[]): Promise<void> {
   // commander expects the full argv (node, script, ...) — a bare options
   // array parses to empty opts() and every flag falls through to run.
   const fullArgv =
-    argv.length >= 2 && !(argv[0] ?? "").startsWith("-") ? argv : [process.argv0, "big-cleanup", ...argv];
+    argv.length >= 2 && !(argv[0] ?? "").startsWith("-") ? argv : [process.argv0, "cachereap", ...argv];
   program.parse(fullArgv);
   const opts = program.opts();
 

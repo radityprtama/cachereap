@@ -2,7 +2,7 @@ import pc from "picocolors";
 import { execaSync } from "execa";
 const { isColorSupported, bold, dim } = pc;
 
-// 256-color codes from the original big-cleanup.sh, emitted as raw ANSI
+// 256-color codes from the original cachereap.sh, emitted as raw ANSI
 // (picocolors only ships the 16-color palette).
 const c = (code: number) => (s: string) =>
   isColorSupported ? `\u001b[38;5;${code}m${s}\u001b[0m` : s;

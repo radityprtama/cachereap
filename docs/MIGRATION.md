@@ -1,14 +1,14 @@
-# MIGRATION: big-cleanup.sh → big-cleanup (TypeScript)
+# MIGRATION: cachereap.sh → cachereap (TypeScript)
 
-Dokumen ini mencatat cara port dilakukan, perbedaan per section dengan versi bash, dan alasan di balik setiap keputusan. Sumber kebenaran: `big-cleanup.sh` (di repo ini).
+Dokumen ini mencatat cara port dilakukan, perbedaan per section dengan versi bash, dan alasan di balik setiap keputusan. Sumber kebenaran: `cachereap.sh` (di repo ini).
 
 ## Ringkasan
 
 | | Bash | TypeScript |
 | --- | --- | --- |
 | Runtime | bash + coreutils (Fedora) | Node.js ≥ 20 |
-| Config | `~/.config/big-cleanup/config.conf` (shell) | `~/.config/big-cleanup/config.json` (`conf`) |
-| History | `~/.local/share/big-cleanup/history.log` | field `history` dalam `config.json` (max 50) |
+| Config | `~/.config/cachereap/config.conf` (shell) | `~/.config/cachereap/config.json` (`conf`) |
+| History | `~/.local/share/cachereap/history.log` | field `history` dalam `config.json` (max 50) |
 | Discovery | `mapfile < <(find ... 2>/dev/null)` | GNU `find` via `execaSync` (mirror persis) |
 | Ukuran dir | `du -sh` (gagal senyap tanpa sudo) | walker native + fallback `sudo du -sh` pada EACCES |
 | Counter section | `[i/15]` — salah (hanya 14 section; `STEP_TOTAL=15` hardcoded) | `[i/14]` — benar |
@@ -60,7 +60,7 @@ Versi awal port mengeksekusi `confirmation.prompt()` sebelum parse flag commande
 Verifikasi: `--help` exit 0 tanpa prompt; `--list-sections` exit 0; `--history` tidak meminta konfirmasi.
 
 ### Config: `conf` dengan `projectSuffix: ""`
-Library `conf` secara default menambah suffix `-nodejs` pada nama project (`big-cleanup-nodejs`). Di-set `projectSuffix: ""` agar path tetap `~/.config/big-cleanup/config.json` — konsisten dengan `CONFIG_DIR` bash.
+Library `conf` secara default menambah suffix `-nodejs` pada nama project (`cachereap-nodejs`). Di-set `projectSuffix: ""` agar path tetap `~/.config/cachereap/config.json` — konsisten dengan `CONFIG_DIR` bash.
 
 ### Platform guard
 `platformGuard.ts` menolak jalan di non-Linux dengan pesan jelas. (Bash scriptnya sendiri tidak mengecek, tapi semua perintah adalah Linux-only.)

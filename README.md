@@ -1,6 +1,6 @@
-# big-cleanup
+# cachereap
 
-Cleanup tool untuk Fedora / Next.js / Bun dev machine. Port TypeScript yang setia (faithful port) dari `big-cleanup.sh`, dengan perilaku, output, dan pesan yang identik — plus perbaikan dua bug binding dari versi bash.
+Cleanup tool untuk Fedora / Next.js / Bun dev machine. Port TypeScript yang setia (faithful port) dari `cachereap.sh`, dengan perilaku, output, dan pesan yang identik — plus perbaikan dua bug binding dari versi bash.
 
 Linux-only. Membutuhkan **Node.js ≥ 20**.
 
@@ -10,7 +10,7 @@ Linux-only. Membutuhkan **Node.js ≥ 20**.
 npm install
 npm run build        # tsup -> dist/index.js
 npm test             # vitest
-npm link             # opsional: pasang `big-cleanup` ke PATH
+npm link             # opsional: pasang `cachereap` ke PATH
 ```
 
 Jalankan langsung tanpa install:
@@ -22,7 +22,7 @@ node dist/index.js --dry-run
 ## Usage
 
 ```bash
-big-cleanup [options]
+cachereap [options]
 ```
 
 | Option | Deskripsi |
@@ -61,7 +61,7 @@ Ada **14 section** (bukan 15 — lihat [MIGRATION.md](docs/MIGRATION.md) untuk p
 
 ### Migrasi dari `config.conf` (bash)
 
-Versi bash membaca `~/.config/big-cleanup/config.conf` (format shell). Versi TS membaca `~/.config/big-cleanup/config.json` (format JSON via library `conf`).
+Versi bash membaca `~/.config/cachereap/config.conf` (format shell). Versi TS membaca `~/.config/cachereap/config.json` (format JSON via library `conf`).
 
 Pemetaan:
 
@@ -74,11 +74,11 @@ Pemetaan:
 Migrasi manual (sekali saja):
 
 ```bash
-mkdir -p ~/.config/big-cleanup
+mkdir -p ~/.config/cachereap
 node -e '
 const fs = require("fs");
 const c = {};
-const lines = fs.readFileSync(process.env.HOME + "/.config/big-cleanup/config.conf", "utf8").split("\n");
+const lines = fs.readFileSync(process.env.HOME + "/.config/cachereap/config.conf", "utf8").split("\n");
 for (const l of lines) {
   const m = l.match(/^\s*(\w+)=(.*)$/);
   if (!m) continue;
@@ -86,7 +86,7 @@ for (const l of lines) {
   if (m[1] === "STALE_DAYS") c.staleDays = Number(m[2]);
   if (m[1] === "SKIP_SECTIONS") c.skipSections = m[2] ? m[2].split(",") : [];
 }
-fs.writeFileSync(process.env.HOME + "/.config/big-cleanup/config.json", JSON.stringify(c, null, 2) + "\n");
+fs.writeFileSync(process.env.HOME + "/.config/cachereap/config.json", JSON.stringify(c, null, 2) + "\n");
 '
 ```
 
@@ -94,14 +94,14 @@ Catatan: file `config.conf` lama dan `history.log` lama TIDAK dibaca oleh versi 
 
 ### File config
 
-- **Config**: `~/.config/big-cleanup/config.json`
+- **Config**: `~/.config/cachereap/config.json`
 - **History**: tersimpan di dalam `config.json` (field `history`)
 
 `--edit-config` membuka file config dengan `$EDITOR` (default `nano`).
 
 ## Perbedaan dari bash (amendment binding)
 
-Hanya dua perubahan perilaku dari `big-cleanup.sh` — keduanya bug fix, sisanya identik 1:1:
+Hanya dua perubahan perilaku dari `cachereap.sh` — keduanya bug fix, sisanya identik 1:1:
 
 1. **Counter section benar (14/14)** — bash meng-hardcode `STEP_TOTAL=15` dan mencetak `[i/15]` untuk semua section padahal hanya ada 14. TS mencetak `[i/14]`.
 2. **Ukuran direktori native** — bash menggunakan `du -sh` (tanpa sudo, gagal senyap di direktori yang butuh akses root). TS menggunakan walker native dengan fallback `sudo du -sh` saat EACCES, jadi ukuran cache seperti `/var/cache/dnf` dilaporkan dengan benar.
